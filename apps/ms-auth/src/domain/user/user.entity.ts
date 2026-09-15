@@ -4,6 +4,7 @@ import { UserEmail } from './user-email.value-object.js';
 import { UserMfaStrategy } from './user-mfa-strategy.enum.js';
 import { UserPassword } from './user-password.value-object.js';
 import { DomainException } from '@shared/domain/exceptions/domain.exeception.js';
+import { UserGroup } from '../user-group/user-group.entity.js';
 
 export class User extends Entity {
   public constructor(
@@ -82,5 +83,59 @@ export class User extends Entity {
     }
 
     this.mfaEnabledStrategies.push(mfaStrategy);
+  }
+
+  public removeMdaStrategy(mfaStrategy: UserMfaStrategy): void {
+    if (!this.mfaEnabledStrategies.includes(mfaStrategy)) {
+      throw new DomainException('Strategy not found');
+    }
+
+    this.mfaEnabledStrategies = this.mfaEnabledStrategies.filter(
+      (mfa) => mfa != mfaStrategy,
+    );
+  }
+
+  public changeUserGroup(group: UserGroup): UserGroup {
+    if (!group.getId()) {
+      throw new DomainException(
+        'Group not persisted, please persist group before',
+      );
+    }
+
+    if (!this.getId()) {
+      throw new DomainException(
+        'User not persisted, please persist user before',
+      );
+    }
+
+    if (group.getUsers().includes(this.getId() ?? '')) {
+      throw new DomainException('User already added in this group');
+    }
+
+    this.group = group.getId() ?? '';
+
+    group.addUser(this.getId() ?? '');
+
+    return group;
+  }
+
+  public changeEmail(email: string, token: string, tokenGeneratedAt: Date): void {
+    this.email = new UserEmail(
+      email,
+      token,
+      new Date(tokenGeneratedAt.getTime() + 30 * 60 * 1000)
+    );
+  }
+
+  public verifyEmail(token: string): void {
+    if (!this.email.tokenIsValid()) {
+      throw new DomainException('Token expired');
+    }
+
+    if (this.email?.token !== token) {
+      throw new DomainException('Token is invalid');
+    }
+
+    this.email = new UserEmail(this.email.value, undefined, undefined, new Date());
   }
 }
