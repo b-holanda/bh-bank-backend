@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { MsAuthController } from './ms-auth.controller.js';
-import { MsAuthService } from './ms-auth.service.js';
+import { DomainModule } from './domain/domain.module.js';
 
 @Module({
-  imports: [],
-  controllers: [MsAuthController],
-  providers: [MsAuthService],
+  imports: [DomainModule],
+  controllers: [],
+  providers: [],
 })
 export class MsAuthModule {}
