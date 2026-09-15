@@ -18,6 +18,18 @@
     "skipLibCheck": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "types": ["vitest/globals", "node"]
-  }
+    "types": [
+      "vitest/globals",
+      "node"
+    ]
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/bh-bank-backend/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/ms-auth/tsconfig.app.json"
+    }
+  ]
 }
