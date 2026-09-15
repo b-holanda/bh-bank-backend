@@ -10,7 +10,7 @@
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "build-all": "nest build --all",
     "start-ms-auth:prod": "node dist/apps/ms-auth/main",
-    "lint": "oxlint --type-aware src/ test/",
+    "lint": "oxlint --type-aware apps/ test/ libs/",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",

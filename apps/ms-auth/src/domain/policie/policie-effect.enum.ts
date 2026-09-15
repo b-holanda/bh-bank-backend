@@ -1,4 +1,4 @@
 export enum PolicieEffect {
-    ALLOW = 'ALLOW',
-    DENY = 'DENY'
+  ALLOW = 'ALLOW',
+  DENY = 'DENY',
 }

@@ -1,51 +1,51 @@
-import { Entity } from "@shared/domain/entity.js";
-import { Policie } from "../policie/policie.entity.js";
-import { UserGroupValidator } from "./user-group.validator.js";
+import { Entity } from '@shared/domain/entity.js';
+import { Policie } from '../policie/policie.entity.js';
+import { UserGroupValidator } from './user-group.validator.js';
 
 export class UserGroup extends Entity {
-    public constructor(
-        private name: string,
-        private policies: Array<Policie>,
-        private users: Array<string>,
-        id?: string,
-        active: boolean = true
-    ) {
-        super(id, active);
-    }
+  public constructor(
+    private name: string,
+    private policies: Array<Policie>,
+    private users: Array<string>,
+    id?: string,
+    active: boolean = true,
+  ) {
+    super(id, active);
+  }
 
-    public validate(validator: UserGroupValidator): void {
-        validator.validate(this);
-    }
+  public validate(validator: UserGroupValidator): void {
+    validator.validate(this);
+  }
 
-    public getName(): string {
-        return this.name;
-    }
+  public getName(): string {
+    return this.name;
+  }
 
-    public getPolicies(): Array<Policie> {
-        return this.policies;
-    }
+  public getPolicies(): Array<Policie> {
+    return this.policies;
+  }
 
-    public getUsers(): Array<string> {
-        return this.users;
-    }
-    
-    public updateName(name: string): void {
-        this.name = name;
-    }
+  public getUsers(): Array<string> {
+    return this.users;
+  }
 
-    public addPolicy(policy: Policie): void {
-        this.policies.push(policy);
-    }
+  public updateName(name: string): void {
+    this.name = name;
+  }
 
-    public removePolicy(policy: Policie): void {
-        this.policies = this.policies.filter(p => p.getId() !== policy.getId());
-    }
+  public addPolicy(policy: Policie): void {
+    this.policies.push(policy);
+  }
 
-    public addUser(userId: string): void {
-        this.users.push(userId);
-    }
+  public removePolicy(policy: Policie): void {
+    this.policies = this.policies.filter((p) => p.getId() !== policy.getId());
+  }
 
-    public removeUser(userId: string): void {
-        this.users = this.users.filter(uid => uid !== userId);
-    }
+  public addUser(userId: string): void {
+    this.users.push(userId);
+  }
+
+  public removeUser(userId: string): void {
+    this.users = this.users.filter((uid) => uid !== userId);
+  }
 }

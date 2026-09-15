@@ -1,4 +1,4 @@
-import { DomainException } from "./domain.exeception.js";
+import { DomainException } from './domain.exeception.js';
 
 export class ValidationException extends DomainException {
   constructor(public readonly erros: Array<string>) {
