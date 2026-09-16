@@ -119,11 +119,15 @@ export class User extends Entity {
     return group;
   }
 
-  public changeEmail(email: string, token: string, tokenGeneratedAt: Date): void {
+  public changeEmail(
+    email: string,
+    token: string,
+    tokenGeneratedAt: Date,
+  ): void {
     this.email = new UserEmail(
       email,
       token,
-      new Date(tokenGeneratedAt.getTime() + 30 * 60 * 1000)
+      new Date(tokenGeneratedAt.getTime() + 30 * 60 * 1000),
     );
   }
 
@@ -136,6 +140,23 @@ export class User extends Entity {
       throw new DomainException('Token is invalid');
     }
 
-    this.email = new UserEmail(this.email.value, undefined, undefined, new Date());
+    this.email = new UserEmail(
+      this.email.value,
+      undefined,
+      undefined,
+      new Date(),
+    );
+  }
+
+  public changePassword(password: string): void {
+    this.password = new UserPassword(password);
+  }
+
+  public setTOTPSecret(totpSecret: string): void {
+    this.totpSecret = totpSecret;
+  }
+
+  public setRecoveryCodes(recoveryCodes: Array<string>): void {
+    this.recoveryCodes = recoveryCodes;
   }
 }
